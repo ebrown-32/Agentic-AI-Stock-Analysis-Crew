@@ -3,6 +3,8 @@
 This is an exploratory project to get familiar with CrewAI, an orchestration framework for agentic AI. It is built in pure python with a Streamlit frontend. The idea is to provide a free, intelligent stock analysis platform powered by a team of AI agents specializing in different aspects of market analysis. Investing should be accessible to everyone.
 (This tool is for informational purposes only. Always conduct your own research and consult with financial advisors before making investment decisions. Feel free to extend this tool to your own needs.)
 
+![alt text](https://github.com/ebrown-32/Agentic-AI-Stock-Analysis-Crew/blob/main/analyze-stock-example.png?raw=true)
+
 ## Status: Work in Progress 🚧
 
 I'm making things better as I have the time! Some stuff is broken, but I'm working on it.
