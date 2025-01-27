@@ -1,0 +1,17 @@
+crewai[tools]
+numpy
+scikit-learn
+tensorflow
+tensorflow_hub
+google-generativeai
+langchain-google-genai
+bs4
+yfinance
+unstructured
+langchain
+langchain_community
+jq
+plotly
+streamlit
+pysqlite3-binary
+duckduckgo-search
