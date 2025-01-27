@@ -69,11 +69,11 @@ stock-analyst-ai/
 ## Dependencies
 
 - crewai (https://docs.crewai.com/introduction)
-- streamlit
-- yfinance
-- plotly
-- pandas
-- python-dotenv
+- streamlit (https://streamlit.io/)
+- yfinance (https://pypi.org/project/yfinance/)
+- plotly (https://plotly.com/)
+- pandas (https://pandas.pydata.org/)
+- python-dotenv (https://pypi.org/project/python-dotenv/)
 
 ## Contributing
 
