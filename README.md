@@ -1,48 +1,102 @@
-# Stock Analysis AI Team
+# Agentic Stock Analysis System
 
 This is an exploratory project to get familiar with CrewAI, an orchestration framework for agentic AI. It is built in pure python with a Streamlit frontend. The idea is to provide a free, intelligent stock analysis platform powered by a team of AI agents specializing in different aspects of market analysis. Investing should be accessible to everyone.
 (This tool is for informational purposes only. Always conduct your own research and consult with financial advisors before making investment decisions. Feel free to extend this tool to your own needs.)
 
-![alt text](https://github.com/ebrown-32/Agentic-AI-Stock-Analysis-Crew/blob/main/analyze-stock-example.png?raw=true)
+```mermaid
+graph TD
+    subgraph Agents
+        MIO[Market Intelligence Officer]
+        TAS[Technical Analysis Specialist]
+        FAE[Fundamental Analysis Expert]
+        RMS[Risk Management Specialist]
+        PSE[Portfolio Strategy Expert]
+    end
 
-## Status: Work in Progress 🚧
+    subgraph Tools
+        ST[Search Tool]
+        SDT[Stock Data Tool]
+        FMT[Financial Metrics Tool]
+    end
 
-I'm making things better as I have the time! Some stuff is broken, but I'm working on it.
+    subgraph Data Flow
+        MIO --> |Market Research| PSE
+        TAS --> |Technical Analysis| PSE
+        FAE --> |Fundamental Analysis| PSE
+        RMS --> |Risk Assessment| PSE
+        PSE --> |Final Strategy|Output
+    end
 
-## Overview
-
-The Stock Analyst AI Team combines multiple specialized AI agents to provide comprehensive stock analysis:
-- Market Intelligence Officer
-- Technical Analysis Specialist
-- Fundamental Analysis Expert
-- Portfolio Strategy Expert
-
-Currently the agents are equipped with the tools to 1. use the Yahoo Finance API to get market data. 2. Search the web for news and other information. 3. Use Google Gemini (https://gemini.google.com/) as the LLM.
+    MIO --> ST
+    MIO --> SDT
+    TAS --> SDT
+    FAE --> SDT
+    FAE --> FMT
+    RMS --> SDT
+    RMS --> FMT
+    PSE --> SDT
+```
 
 ## Features
 
-✅ **Current Features**
-- Real-time market data visualization
-- Interactive candlestick and volume charts
-- Key financial metrics display
-- AI-powered market analysis
-- Technical and fundamental analysis
-- Investment recommendations
+### Core Analysis
+- **Multi-Agent System**: Five specialized agents working in concert:
+  - Market Intelligence Officer: Market research and competitive analysis
+  - Technical Analysis Specialist: Price patterns and technical indicators
+  - Fundamental Analysis Expert: Financial statements and valuation
+  - Risk Management Specialist: Risk assessment and mitigation
+  - Portfolio Strategy Expert: Final investment recommendations
 
-🚧 **Roadmap**
-TBD
+### Technical Capabilities
+- **Real-time Progress Updates**: Live feedback from agents during analysis
+- **Retry Mechanism**: Automatic retry for API calls with exponential backoff
+- **Error Handling**: Comprehensive error management across all operations
+- **Data Visualization**: Interactive charts and metrics display
+- **Responsive Dashboard**: Modern, user-friendly interface
+
+### Analysis Components
+- **Market Research**: Industry position, competitive advantages, and market trends
+- **Technical Analysis**: Multi-timeframe analysis, support/resistance levels, and indicators
+- **Fundamental Analysis**: Financial statements, valuation methods, and growth metrics
+- **Risk Assessment**: Volatility analysis, VaR calculations, and stress testing
+- **Investment Strategy**: Position sizing, entry/exit points, and portfolio context
+
+### Dashboard Features
+- **Interactive Charts**: 
+  - Candlestick charts with volume analysis
+  - Technical indicators (RSI, MACD)
+  - Moving averages
+- **Financial Metrics**: 
+  - Profitability ratios
+  - Valuation metrics
+  - Growth indicators
+- **Risk Metrics**:
+  - Volatility analysis
+  - Value at Risk (VaR)
+  - Sharpe Ratio
+  - Risk level assessment
+- **Educational Resources**: 
+  - Investment terms glossary
+  - Technical analysis explanations
+  - Financial metrics definitions
 
 ## Installation
 
-1. Clone the repository
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/agentic-stock-analysis.git
+cd agentic-stock-analysis
+```
+
 2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
-3. Set up your environment variables in `.env`:
-```
-GEMINI_API_KEY=your_api_key_here
-MODEL_PROVIDER=gemini/gemini-1.5-pro-latest
+
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your API keys
 ```
 
 ## Usage

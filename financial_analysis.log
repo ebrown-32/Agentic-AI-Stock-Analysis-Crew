@@ -1,0 +1,684 @@
+2025-02-04 21:46:49,067 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 21:46:49,068 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 21:46:49,068 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 21:46:49,079 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 21:46:49,080 - market_analysis_crew - ERROR - Error during stock analysis: 1 validation error for Task
+expected_output
+  Field required [type=missing, input_value={'description': 'Conduct ...ehensive market views.)}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.10/v/missing
+2025-02-04 21:48:13,387 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 21:48:13,388 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 21:48:13,388 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 21:48:13,399 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 21:48:13,402 - market_analysis_crew - ERROR - Error during stock analysis: 1 validation error for Crew
+verbose
+  Input should be a valid boolean, unable to interpret input [type=bool_parsing, input_value=2, input_type=int]
+    For further information visit https://errors.pydantic.dev/2.10/v/bool_parsing
+2025-02-04 21:49:01,898 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 21:49:01,898 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 21:49:01,899 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 21:49:01,906 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 21:49:01,940 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:49:02,078 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=your_key "HTTP/1.1 400 Bad Request"
+2025-02-04 21:49:02,092 - root - ERROR - LiteLLM call failed: litellm.AuthenticationError: geminiException - {
+  "error": {
+    "code": 400,
+    "message": "API key not valid. Please pass a valid API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key not valid. Please pass a valid API key."
+      }
+    ]
+  }
+}
+
+2025-02-04 21:49:02,092 - market_analysis_crew - ERROR - Error during stock analysis: litellm.AuthenticationError: geminiException - {
+  "error": {
+    "code": 400,
+    "message": "API key not valid. Please pass a valid API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key not valid. Please pass a valid API key."
+      }
+    ]
+  }
+}
+
+2025-02-04 21:50:14,414 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 21:50:14,414 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 21:50:14,415 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 21:50:14,424 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 21:50:14,428 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 21:50:14,441 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:50:14,545 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=your_key "HTTP/1.1 400 Bad Request"
+2025-02-04 21:50:14,553 - root - ERROR - LiteLLM call failed: litellm.AuthenticationError: geminiException - {
+  "error": {
+    "code": 400,
+    "message": "API key not valid. Please pass a valid API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key not valid. Please pass a valid API key."
+      }
+    ]
+  }
+}
+
+2025-02-04 21:50:14,553 - market_analysis_crew - ERROR - Error during stock analysis: litellm.AuthenticationError: geminiException - {
+  "error": {
+    "code": 400,
+    "message": "API key not valid. Please pass a valid API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key not valid. Please pass a valid API key."
+      }
+    ]
+  }
+}
+
+2025-02-04 21:50:47,023 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 21:50:47,023 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 21:50:47,024 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 21:50:47,030 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 21:50:47,036 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 21:50:47,047 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:50:47,151 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=your_key "HTTP/1.1 400 Bad Request"
+2025-02-04 21:50:47,158 - root - ERROR - LiteLLM call failed: litellm.AuthenticationError: geminiException - {
+  "error": {
+    "code": 400,
+    "message": "API key not valid. Please pass a valid API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key not valid. Please pass a valid API key."
+      }
+    ]
+  }
+}
+
+2025-02-04 21:50:47,158 - market_analysis_crew - ERROR - Error during stock analysis: litellm.AuthenticationError: geminiException - {
+  "error": {
+    "code": 400,
+    "message": "API key not valid. Please pass a valid API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key not valid. Please pass a valid API key."
+      }
+    ]
+  }
+}
+
+2025-02-04 21:51:04,837 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 21:51:04,838 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 21:51:04,839 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 21:51:04,851 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 21:51:04,873 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:51:27,722 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:51:27,724 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:51:28,643 - primp - INFO - response: https://html.duckduckgo.com/html 200 26548
+2025-02-04 21:51:28,649 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:51:47,611 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:51:47,619 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:51:47,622 - financial_tools - INFO - Fetching stock data for ticker: AAPL
+2025-02-04 21:51:48,635 - financial_tools - INFO - Successfully fetched stock data for AAPL
+2025-02-04 21:51:48,639 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:52:46,853 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:52:46,855 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:52:46,875 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:53:01,168 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:53:01,170 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:53:01,177 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:53:13,189 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:53:13,192 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:53:13,211 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:53:32,710 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:53:32,712 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:53:32,723 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:54:06,762 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:54:06,763 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:54:06,766 - financial_tools - INFO - Calculating financial metrics for ticker: AAPL
+2025-02-04 21:54:07,475 - financial_tools - INFO - Successfully calculated financial metrics for AAPL
+2025-02-04 21:54:07,479 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:54:34,236 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:54:34,238 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:54:34,352 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:54:51,873 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:54:51,874 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:54:51,881 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:55:22,917 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:55:22,919 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:55:22,924 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:55:48,124 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:55:48,126 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:55:48,147 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:56:46,776 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:56:46,780 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:56:46,789 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 21:57:07,774 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 21:57:07,778 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 21:57:07,795 - financial_tools - INFO - Fetching stock data for ticker: AAPL
+2025-02-04 21:57:08,289 - financial_tools - INFO - Successfully fetched stock data for AAPL
+2025-02-04 21:57:08,306 - market_analysis_crew - INFO - Successfully completed analysis for AAPL
+2025-02-04 21:57:08,307 - financial_tools - INFO - Fetching stock data for ticker: AAPL
+2025-02-04 21:57:08,398 - financial_tools - INFO - Successfully fetched stock data for AAPL
+2025-02-04 21:57:08,399 - financial_tools - INFO - Calculating financial metrics for ticker: AAPL
+2025-02-04 21:57:08,485 - financial_tools - INFO - Successfully calculated financial metrics for AAPL
+2025-02-04 22:05:26,755 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:05:26,756 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: NVDA
+2025-02-04 22:05:26,756 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:05:26,774 - market_analysis_crew - INFO - Creating analysis tasks for ticker: NVDA
+2025-02-04 22:05:26,781 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 22:05:26,795 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:05:47,393 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:05:47,395 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:05:48,590 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 17710
+2025-02-04 22:05:48,594 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:06:05,898 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:06:05,899 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:06:06,962 - primp - INFO - response: https://html.duckduckgo.com/html 200 28129
+2025-02-04 22:06:06,966 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:06:27,595 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:06:27,599 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:06:28,492 - primp - INFO - response: https://html.duckduckgo.com/html 200 28176
+2025-02-04 22:06:28,497 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:06:52,147 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:06:52,149 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:06:52,899 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 18094
+2025-02-04 22:06:52,902 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:07:09,112 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:07:09,114 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:07:10,034 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 19311
+2025-02-04 22:07:10,038 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:07:30,465 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:07:30,466 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:07:31,262 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 19553
+2025-02-04 22:07:31,266 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:07:40,814 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:07:40,817 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:07:40,835 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:07:54,416 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:07:54,418 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:07:54,420 - financial_tools - INFO - Fetching stock data for ticker: NVDA
+2025-02-04 22:07:55,079 - financial_tools - INFO - Successfully fetched stock data for NVDA
+2025-02-04 22:07:55,084 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:08:08,335 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:08:08,339 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:08:08,357 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:09:00,240 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:09:00,243 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:09:00,248 - financial_tools - INFO - Calculating financial metrics for ticker: NVDA
+2025-02-04 22:09:01,027 - financial_tools - INFO - Successfully calculated financial metrics for NVDA
+2025-02-04 22:09:01,030 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:09:20,814 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:09:20,816 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:09:20,824 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:09:42,689 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:09:42,690 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:09:42,709 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:10:00,357 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:10:00,359 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:10:00,366 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:10:33,331 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:10:33,332 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:10:33,338 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:10:51,501 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:10:51,503 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:10:51,512 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:11:06,140 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:11:06,142 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:11:06,150 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:11:25,471 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:11:25,474 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:11:25,494 - financial_tools - INFO - Fetching stock data for ticker: NVDA
+2025-02-04 22:11:25,839 - financial_tools - INFO - Successfully fetched stock data for NVDA
+2025-02-04 22:11:25,843 - market_analysis_crew - INFO - Successfully completed analysis for NVDA
+2025-02-04 22:11:25,843 - financial_tools - INFO - Fetching stock data for ticker: NVDA
+2025-02-04 22:11:25,921 - financial_tools - INFO - Successfully fetched stock data for NVDA
+2025-02-04 22:11:25,922 - financial_tools - INFO - Calculating financial metrics for ticker: NVDA
+2025-02-04 22:11:25,997 - financial_tools - INFO - Successfully calculated financial metrics for NVDA
+2025-02-04 22:23:09,590 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:23:09,591 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:23:09,591 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:23:09,595 - market_analysis_crew - ERROR - Error during stock analysis: "EnhancedAgent" object has no field "callback"
+2025-02-04 22:23:45,883 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:23:45,884 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:23:45,884 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:23:45,885 - market_analysis_crew - ERROR - Error during stock analysis: "EnhancedAgent" object has no field "callback"
+2025-02-04 22:24:33,880 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:24:33,881 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:24:33,881 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:24:33,892 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 22:24:33,893 - market_analysis_crew - ERROR - Error during stock analysis: 'EnhancedAgent' object has no attribute 'get'
+2025-02-04 22:25:21,516 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:25:21,517 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:25:21,519 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:25:21,526 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 22:25:21,527 - market_analysis_crew - ERROR - Error during stock analysis: 'Agent' object has no attribute 'get'
+2025-02-04 22:26:14,503 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:26:14,504 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:26:14,504 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:26:14,507 - market_analysis_crew - ERROR - Error during stock analysis: "EnhancedAgent" object has no field "callback"
+2025-02-04 22:26:53,212 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:26:53,214 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:26:53,214 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:26:53,221 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 22:26:53,228 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 22:26:53,241 - market_analysis_crew - ERROR - Error during stock analysis: EnhancedAgent.execute_task() got an unexpected keyword argument 'context'
+2025-02-04 22:27:26,363 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:27:26,364 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:27:26,364 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:27:26,372 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 22:27:26,376 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 22:27:26,387 - market_analysis_crew - ERROR - Error during stock analysis: EnhancedAgent.execute_task() got an unexpected keyword argument 'tools'
+2025-02-04 22:28:23,361 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:28:23,362 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:28:23,363 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:28:23,375 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 22:28:23,380 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 22:28:26,397 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:28:48,381 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:28:48,385 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:28:49,462 - primp - INFO - response: https://html.duckduckgo.com/html 200 26738
+2025-02-04 22:28:49,467 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:29:09,003 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:29:09,004 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:29:09,007 - financial_tools - INFO - Fetching stock data for ticker: AAPL
+2025-02-04 22:29:09,376 - financial_tools - INFO - Successfully fetched stock data for AAPL
+2025-02-04 22:29:09,380 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:30:09,598 - root - ERROR - LiteLLM call failed: litellm.APIConnectionError: GeminiException - Server disconnected without sending a response.
+2025-02-04 22:30:09,598 - market_analysis_crew - ERROR - Error during stock analysis: litellm.APIConnectionError: GeminiException - Server disconnected without sending a response.
+2025-02-04 22:30:26,171 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:30:26,172 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-02-04 22:30:26,172 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:30:26,181 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-02-04 22:30:26,186 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 22:30:29,215 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:30:47,497 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:30:47,499 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:30:48,433 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 18492
+2025-02-04 22:30:48,436 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:31:11,087 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:31:11,092 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:31:11,094 - financial_tools - INFO - Fetching stock data for ticker: AAPL
+2025-02-04 22:31:11,383 - financial_tools - INFO - Successfully fetched stock data for AAPL
+2025-02-04 22:31:11,389 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:31:47,078 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:31:47,080 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:31:47,880 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 18192
+2025-02-04 22:31:47,884 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:32:31,778 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:32:31,791 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:32:32,748 - primp - INFO - response: https://html.duckduckgo.com/html 200 28153
+2025-02-04 22:32:32,763 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:32:59,121 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:32:59,123 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:33:00,091 - primp - INFO - response: https://html.duckduckgo.com/html 200 28419
+2025-02-04 22:33:00,096 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:33:28,318 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:33:28,319 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:33:29,139 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 20122
+2025-02-04 22:33:29,143 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:33:45,993 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:33:45,995 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:33:49,027 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:34:05,300 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:34:05,303 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:34:05,312 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:34:14,303 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:34:14,305 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:34:17,324 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:34:38,291 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:34:38,294 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:34:38,297 - financial_tools - INFO - Calculating financial metrics for ticker: AAPL
+2025-02-04 22:34:38,567 - financial_tools - INFO - Successfully calculated financial metrics for AAPL
+2025-02-04 22:34:38,570 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:34:53,333 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:34:53,335 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:34:53,343 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:35:16,195 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:35:16,197 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:35:19,216 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:35:36,594 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:35:36,602 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:35:36,610 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:36:01,135 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:36:01,138 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:36:01,143 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:36:18,083 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:36:18,085 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:36:21,104 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:36:35,582 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:36:35,584 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:36:35,591 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:36:53,411 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:36:53,414 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:36:53,432 - financial_tools - INFO - Fetching stock data for ticker: AAPL
+2025-02-04 22:36:53,859 - financial_tools - INFO - Successfully fetched stock data for AAPL
+2025-02-04 22:36:53,862 - market_analysis_crew - INFO - Successfully completed analysis for AAPL
+2025-02-04 22:36:53,863 - financial_tools - INFO - Fetching stock data for ticker: AAPL
+2025-02-04 22:36:54,078 - financial_tools - INFO - Successfully fetched stock data for AAPL
+2025-02-04 22:36:54,079 - financial_tools - INFO - Calculating financial metrics for ticker: AAPL
+2025-02-04 22:36:54,187 - financial_tools - INFO - Successfully calculated financial metrics for AAPL
+2025-02-04 22:45:55,484 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:45:55,485 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: META
+2025-02-04 22:45:55,485 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:45:55,503 - market_analysis_crew - INFO - Creating analysis tasks for ticker: META
+2025-02-04 22:45:55,510 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 22:45:58,527 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:46:21,253 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:46:21,256 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:46:22,171 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 18827
+2025-02-04 22:46:22,177 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:46:45,486 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:46:45,488 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:46:46,240 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 20221
+2025-02-04 22:46:46,246 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:47:04,130 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:47:04,132 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:47:05,003 - primp - INFO - response: https://html.duckduckgo.com/html 200 27689
+2025-02-04 22:47:05,009 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:47:19,835 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:47:19,837 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:47:20,714 - primp - INFO - response: https://html.duckduckgo.com/html 200 35697
+2025-02-04 22:47:20,718 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:47:39,036 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:47:39,038 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:47:39,905 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 19042
+2025-02-04 22:47:39,911 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:47:58,704 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:47:58,705 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:47:59,509 - primp - INFO - response: https://html.duckduckgo.com/html 200 29274
+2025-02-04 22:47:59,517 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:48:12,868 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:48:12,869 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:48:15,898 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:48:31,151 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:48:31,153 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:48:31,158 - financial_tools - INFO - Fetching stock data for ticker: META
+2025-02-04 22:48:31,812 - financial_tools - INFO - Successfully fetched stock data for META
+2025-02-04 22:48:31,817 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:48:43,914 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:48:43,917 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:48:46,949 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:49:10,352 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:49:10,354 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:49:10,357 - financial_tools - INFO - Calculating financial metrics for ticker: META
+2025-02-04 22:49:11,038 - financial_tools - INFO - Successfully calculated financial metrics for META
+2025-02-04 22:49:11,042 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:49:23,506 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:49:23,507 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:49:26,526 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:49:42,936 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:49:42,939 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:49:42,947 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:50:43,052 - root - ERROR - LiteLLM call failed: litellm.APIConnectionError: GeminiException - Server disconnected without sending a response.
+2025-02-04 22:50:43,052 - market_analysis_crew - ERROR - Error during stock analysis: litellm.APIConnectionError: GeminiException - Server disconnected without sending a response.
+2025-02-04 22:50:56,092 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:50:56,093 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: META
+2025-02-04 22:50:56,093 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:50:56,104 - market_analysis_crew - INFO - Creating analysis tasks for ticker: META
+2025-02-04 22:50:56,108 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 22:50:59,121 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:51:19,672 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:51:19,674 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:51:20,687 - primp - INFO - response: https://html.duckduckgo.com/html 200 42032
+2025-02-04 22:51:20,691 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:51:41,623 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:51:41,626 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:51:42,437 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 18737
+2025-02-04 22:51:42,444 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:52:11,429 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:52:11,431 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:52:12,443 - primp - INFO - response: https://html.duckduckgo.com/html 200 37979
+2025-02-04 22:52:12,447 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:52:31,787 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:52:31,791 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:52:32,587 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 19447
+2025-02-04 22:52:32,591 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:52:41,542 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:52:41,546 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:52:44,569 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:53:01,035 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:53:01,036 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:53:01,039 - financial_tools - INFO - Fetching stock data for ticker: META
+2025-02-04 22:53:01,445 - financial_tools - INFO - Successfully fetched stock data for META
+2025-02-04 22:53:01,450 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:54:01,678 - root - ERROR - LiteLLM call failed: litellm.APIConnectionError: GeminiException - Server disconnected without sending a response.
+2025-02-04 22:54:01,680 - market_analysis_crew - ERROR - Error during stock analysis: litellm.APIConnectionError: GeminiException - Server disconnected without sending a response.
+2025-02-04 22:55:14,261 - market_analysis_crew - INFO - Initializing LLM...
+2025-02-04 22:55:21,081 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-02-04 22:55:21,081 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: META
+2025-02-04 22:55:21,082 - market_analysis_crew - INFO - Creating specialized agents
+2025-02-04 22:55:21,092 - market_analysis_crew - INFO - Creating analysis tasks for ticker: META
+2025-02-04 22:55:21,099 - opentelemetry.trace - WARNING - Overriding of current TracerProvider is not allowed
+2025-02-04 22:55:24,126 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:55:50,219 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:55:50,222 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:55:51,109 - primp - INFO - response: https://html.duckduckgo.com/html 200 28684
+2025-02-04 22:55:51,113 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:56:15,960 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:56:15,962 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:56:15,965 - financial_tools - INFO - Fetching stock data for ticker: META
+2025-02-04 22:56:16,219 - financial_tools - INFO - Successfully fetched stock data for META
+2025-02-04 22:56:16,236 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:56:53,691 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:56:53,694 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:56:54,447 - primp - INFO - response: https://html.duckduckgo.com/html 200 28838
+2025-02-04 22:56:54,451 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:57:38,027 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:57:38,030 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:57:38,929 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 18578
+2025-02-04 22:57:38,935 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:58:39,051 - root - ERROR - LiteLLM call failed: litellm.APIConnectionError: GeminiException - Server disconnected without sending a response.
+2025-02-04 22:58:46,064 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:59:05,137 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:59:05,139 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:59:05,964 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 18584
+2025-02-04 22:59:05,971 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:59:31,260 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:59:31,261 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:59:32,093 - primp - INFO - response: https://lite.duckduckgo.com/lite/ 200 19191
+2025-02-04 22:59:32,096 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 22:59:50,178 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 22:59:50,180 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 22:59:50,188 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:00:16,363 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:00:16,365 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:00:19,387 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:00:35,603 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:00:35,605 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:00:35,612 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:00:49,167 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:00:49,169 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:00:52,191 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:01:18,275 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:01:18,279 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:01:18,283 - financial_tools - INFO - Calculating financial metrics for ticker: META
+2025-02-04 23:01:18,549 - financial_tools - INFO - Successfully calculated financial metrics for META
+2025-02-04 23:01:18,552 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:01:39,731 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:01:39,733 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:01:39,740 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:02:03,162 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:02:03,166 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:02:06,187 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:02:31,082 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:02:31,085 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:02:31,093 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:02:58,809 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:02:58,812 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:02:58,817 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:03:17,839 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:03:17,841 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:03:20,861 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:03:37,034 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:03:37,035 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:03:37,043 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-02-04 23:03:55,189 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyBq1fH-4WFbsYLGKo-rXtWFW8BM54VR4XY "HTTP/1.1 200 OK"
+2025-02-04 23:03:55,192 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-02-04 23:03:55,211 - financial_tools - INFO - Fetching stock data for ticker: META
+2025-02-04 23:03:55,589 - financial_tools - INFO - Successfully fetched stock data for META
+2025-02-04 23:03:55,592 - market_analysis_crew - INFO - Successfully completed analysis for META
+2025-02-04 23:03:55,593 - financial_tools - INFO - Fetching stock data for ticker: META
+2025-02-04 23:03:55,670 - financial_tools - INFO - Successfully fetched stock data for META
+2025-02-04 23:03:55,671 - financial_tools - INFO - Calculating financial metrics for ticker: META
+2025-02-04 23:03:55,764 - financial_tools - INFO - Successfully calculated financial metrics for META
+2025-02-04 23:06:40,221 - market_analysis_crew - INFO - Initializing LLM...
+2025-02-04 23:07:13,334 - market_analysis_crew - INFO - Initializing LLM...
+2025-02-04 23:10:33,721 - market_analysis_crew - INFO - Initializing LLM...

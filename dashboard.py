@@ -4,208 +4,637 @@ sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 import streamlit as st
 import plotly.graph_objects as go
-import yfinance as yf
+from plotly.subplots import make_subplots
 import pandas as pd
 from market_analysis_crew import MarketAnalysisCrew
+from datetime import datetime
+import numpy as np
+import plotly.express as px
+import json
+import time
+from typing import Any
 
-# Set page configuration
-st.set_page_config(layout="wide", page_title="Stock Analyst AI Team")
+# Set page config for a modern look
+st.set_page_config(
+    page_title="AI Stock Analysis Dashboard",
+    page_icon="📈",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-def create_candlestick_chart(ticker_symbol: str, period: str = "1y") -> go.Figure:
-    """Create an interactive candlestick chart"""
-    try:
-        stock = yf.Ticker(ticker_symbol)
-        df = stock.history(period=period)
-        
-        fig = go.Figure(data=[go.Candlestick(
-            x=df.index,
-            open=df['Open'],
-            high=df['High'],
-            low=df['Low'],
-            close=df['Close']
-        )])
-        
-        fig.update_layout(
-            title=f'{ticker_symbol} Stock Price',
-            yaxis_title='Price (USD)',
-            template='plotly_dark',
-            xaxis_rangeslider_visible=False
-        )
-        
-        return fig
-    except Exception as e:
-        st.error(f"Error creating candlestick chart: {str(e)}")
-        return None
+# Investment terms dictionary
+INVESTMENT_TERMS = {
+    "RSI": "Relative Strength Index - A momentum indicator that measures the magnitude of recent price changes to evaluate overbought or oversold conditions.",
+    "MACD": "Moving Average Convergence Divergence - A trend-following momentum indicator that shows the relationship between two moving averages of a security's price.",
+    "Moving Average": "A calculation used to analyze data points by creating a series of averages of different subsets of the full data set.",
+    "Volume Profile": "A visualization of trading activity over a specified period that shows the price levels where the most trading activity occurred.",
+    "Beta": "A measure of a stock's volatility in relation to the overall market.",
+    "Value at Risk (VaR)": "A statistical measure of the potential loss in value of a portfolio over a defined period.",
+    "Sharpe Ratio": "A measure that indicates the average return minus the risk-free return divided by the standard deviation of return on an investment.",
+    "DCF Valuation": "Discounted Cash Flow - A valuation method that estimates the value of an investment based on its expected future cash flows.",
+    "P/E Ratio": "Price-to-Earnings Ratio - A valuation measure that compares a company's stock price to its earnings per share.",
+    "Market Cap": "The total value of a company's shares of stock, calculated by multiplying the price of a stock by its total number of outstanding shares.",
+    "Economic Moat": "A company's competitive advantage that allows it to maintain profitability and market share over time.",
+    "ESG": "Environmental, Social, and Governance - A set of standards for a company's operations that socially conscious investors use to screen potential investments."
+}
 
-def create_volume_chart(ticker_symbol: str, period: str = "1y") -> go.Figure:
-    """Create an interactive volume chart"""
-    try:
-        stock = yf.Ticker(ticker_symbol)
-        df = stock.history(period=period)
-        
-        fig = go.Figure(data=[go.Bar(x=df.index, y=df['Volume'], name='Volume')])
-        
-        fig.update_layout(
-            title=f'{ticker_symbol} Trading Volume',
-            yaxis_title='Volume',
-            template='plotly_dark'
-        )
-        
-        return fig
-    except Exception as e:
-        st.error(f"Error creating volume chart: {str(e)}")
-        return None
+# Custom CSS for modern styling
+st.markdown("""
+    <style>
+        /* Main container styling */
+        .stApp {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-def display_key_metrics(ticker_symbol: str) -> None:
-    """Display key financial metrics in a modern layout"""
-    try:
-        stock = yf.Ticker(ticker_symbol)
-        info = stock.info
+        /* Sidebar styling */
+        section[data-testid="stSidebar"] {
+            width: 300px !important;
+            background-color: #f8f9fa;
+            padding: 2rem;
+            position: fixed;
+            left: 0;
+            height: 100%;
+            border-right: 1px solid #e9ecef;
+        }
+
+        /* Main content area styling */
+        section[data-testid="stMainContent"] {
+            margin-left: 300px;
+            padding: 2rem;
+            max-width: calc(100% - 300px);
+        }
+
+        /* Card styling */
+        .metric-card {
+            background-color: #f0f2f6;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .analysis-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Headers and text styling */
+        .header-style {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #1f77b4;
+        }
+
+        .analysis-header {
+            color: #1f77b4;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        /* Tooltip styling */
+        .term-tooltip {
+            text-decoration: underline dotted;
+            cursor: help;
+        }
+
+        /* Code output styling */
+        .json-output {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        /* Hide Streamlit branding */
+        #MainMenu {visibility: hidden;}
+        footer {visibility: hidden;}
+
+        /* Ensure content doesn't overlap with sidebar on smaller screens */
+        @media (max-width: 768px) {
+            section[data-testid="stMainContent"] {
+                margin-left: 0;
+                max-width: 100%;
+            }
+        }
+
+        /* Agent Chat styling */
+        .agent-chat {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 1px solid #e9ecef;
+        }
         
-        col1, col2, col3, col4 = st.columns(4)
+        .agent-message {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #1f77b4;
+            animation: fadeIn 0.5s ease-in;
+        }
         
-        with col1:
+        .agent-name {
+            font-weight: bold;
+            color: #1f77b4;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .agent-timestamp {
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        .agent-thinking {
+            color: #666;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .thinking-dots {
+            display: inline-block;
+            animation: thinking 1.5s infinite;
+        }
+        
+        .agent-result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes thinking {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+        }
+
+        /* Tooltip styling */
+        .sidebar-tooltip {
+            color: #1f77b4;
+            font-size: 0.8em;
+            margin-top: 5px;
+            padding: 5px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+def format_json_output(data: dict) -> str:
+    """Format JSON data for better readability"""
+    return json.dumps(data, indent=2)
+
+def add_tooltips_to_text(text: str) -> str:
+    """Add tooltips to technical terms in the text"""
+    for term, definition in INVESTMENT_TERMS.items():
+        if term in text:
+            text = text.replace(term, f'<span class="term-tooltip" title="{definition}">{term}</span>')
+    return text
+
+def create_candlestick_chart(stock_data):
+    """Create an interactive candlestick chart with volume"""
+    dates = pd.to_datetime(stock_data["dates"])
+    prices = stock_data["price_history"]
+    volumes = stock_data["volume_history"]
+    
+    # Create figure with secondary y-axis
+    fig = make_subplots(rows=2, cols=1, shared_xaxes=True, 
+                       vertical_spacing=0.03, subplot_titles=('Price', 'Volume'),
+                       row_heights=[0.7, 0.3])
+
+    # Add candlestick
+    fig.add_trace(go.Scatter(
+        x=dates,
+        y=prices,
+        mode='lines',
+        name='Price',
+        line=dict(color='#1f77b4')
+    ), row=1, col=1)
+
+    # Add volume bar chart
+    fig.add_trace(go.Bar(
+        x=dates,
+        y=volumes,
+        name='Volume',
+        marker_color='#2ca02c'
+    ), row=2, col=1)
+
+    # Add moving averages
+    ma_data = stock_data["technical_indicators"]["moving_averages"]
+    for ma_name, ma_values in ma_data.items():
+        fig.add_trace(go.Scatter(
+            x=dates,
+            y=ma_values,
+            name=ma_name,
+            line=dict(dash='dash')
+        ), row=1, col=1)
+
+    # Update layout
+    fig.update_layout(
+        height=800,
+        showlegend=True,
+        title_text="Price and Volume Analysis",
+        xaxis_rangeslider_visible=False
+    )
+
+    return fig
+
+def create_technical_indicators_chart(stock_data):
+    """Create technical indicators visualization"""
+    dates = pd.to_datetime(stock_data["dates"])
+    
+    # Create figure with secondary y-axis
+    fig = make_subplots(rows=2, cols=1, shared_xaxes=True,
+                       vertical_spacing=0.05, subplot_titles=('RSI', 'MACD'))
+
+    # Add RSI
+    rsi_values = stock_data["technical_indicators"]["rsi"]
+    fig.add_trace(go.Scatter(
+        x=dates,
+        y=rsi_values,
+        name='RSI',
+        line=dict(color='#1f77b4')
+    ), row=1, col=1)
+
+    # Add MACD
+    macd_data = stock_data["technical_indicators"]["macd"]
+    fig.add_trace(go.Scatter(
+        x=dates,
+        y=macd_data["macd"],
+        name='MACD',
+        line=dict(color='#1f77b4')
+    ), row=2, col=1)
+    
+    fig.add_trace(go.Scatter(
+        x=dates,
+        y=macd_data["signal"],
+        name='Signal',
+        line=dict(color='#ff7f0e')
+    ), row=2, col=1)
+
+    # Update layout
+    fig.update_layout(
+        height=600,
+        showlegend=True,
+        title_text="Technical Indicators"
+    )
+
+    # Add RSI lines
+    fig.add_hline(y=70, line_dash="dash", line_color="red", row=1, col=1)
+    fig.add_hline(y=30, line_dash="dash", line_color="green", row=1, col=1)
+
+    return fig
+
+def display_metrics_dashboard(metrics):
+    """Display financial metrics in an organized dashboard"""
+    cols = st.columns(3)
+    
+    # Profitability Metrics
+    with cols[0]:
+        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
+        st.subheader("📈 Profitability")
+        for key, value in metrics["profitability"].items():
+            if value is not None:
+                st.metric(
+                    label=key.replace('_', ' ').title(),
+                    value=f"{value:.2%}" if isinstance(value, float) else value
+                )
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # Valuation Metrics
+    with cols[1]:
+        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
+        st.subheader("💰 Valuation")
+        for key, value in metrics["valuation"].items():
+            if value is not None:
+                st.metric(
+                    label=key.replace('_', ' ').title(),
+                    value=f"{value:.2f}" if isinstance(value, float) else value
+                )
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # Growth Metrics
+    with cols[2]:
+        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
+        st.subheader("🚀 Growth")
+        for key, value in metrics["growth"].items():
+            if value is not None:
+                st.metric(
+                    label=key.replace('_', ' ').title(),
+                    value=f"{value:.2%}" if isinstance(value, float) else value
+                )
+        st.markdown('</div>', unsafe_allow_html=True)
+
+def display_risk_metrics(risk_metrics):
+    """Display risk metrics with visual indicators"""
+    st.markdown('<div class="analysis-section">', unsafe_allow_html=True)
+    st.markdown("### 🎯 Risk Analysis")
+    
+    cols = st.columns(4)
+    
+    # Volatility
+    with cols[0]:
+        volatility = risk_metrics.get("volatility")
+        if volatility:
             st.metric(
-                "Current Price",
-                f"${info.get('currentPrice', 'N/A'):,.2f}",
-                f"{info.get('regularMarketChangePercent', 0):.2f}%"
+                "Annualized Volatility",
+                f"{volatility:.2%}",
+                delta_color="inverse"
             )
-        
-        with col2:
-            st.metric(
-                "Market Cap",
-                f"${info.get('marketCap', 0)/1e9:,.2f}B",
-                "Market Value"
-            )
-        
-        with col3:
-            st.metric(
-                "P/E Ratio",
-                f"{info.get('trailingPE', 'N/A')}"
-            )
-        
-        with col4:
-            st.metric(
-                "52W Range",
-                f"${info.get('fiftyTwoWeekLow', 0):,.2f} - ${info.get('fiftyTwoWeekHigh', 0):,.2f}"
-            )
-    except Exception as e:
-        st.error(f"Error displaying metrics: {str(e)}")
 
-def display_analysis_section(title: str, data: dict) -> None:
-    """Display analysis results in a modern, organized layout"""
-    try:
-        st.subheader(title)
-        
-        if isinstance(data, dict):
-            for key, value in data.items():
-                with st.expander(f"📊 {key.replace('_', ' ').title()}"):
-                    if isinstance(value, dict):
-                        for sub_key, sub_value in value.items():
-                            st.markdown(f"**{sub_key.replace('_', ' ').title()}:**")
-                            st.write(sub_value)
-                    elif isinstance(value, list):
-                        for item in value:
-                            st.markdown(f"• {item}")
-                    else:
-                        st.write(value)
-        else:
-            st.write(data)
-    except Exception as e:
-        st.error(f"Error displaying analysis section: {str(e)}")
+    # Value at Risk
+    with cols[1]:
+        var = risk_metrics.get("value_at_risk")
+        if var:
+            st.metric(
+                "Daily VaR (95%)",
+                f"{var:.2%}",
+                delta_color="inverse"
+            )
 
-def main():
-    # Header with logo and title
-    st.markdown("""
-        <div style='text-align: center'>
-            <h1>🔮 Stock Analyst AI Team</h1>
-            <p style='font-size: 1.2em'>Intelligent Stock Analysis Platform</p>
+    # Sharpe Ratio
+    with cols[2]:
+        sharpe = risk_metrics.get("sharpe_ratio")
+        if sharpe:
+            st.metric(
+                "Sharpe Ratio",
+                f"{sharpe:.2f}",
+                delta_color="normal"
+            )
+
+    # Risk Assessment
+    with cols[3]:
+        risk_level = risk_metrics.get("risk_assessment", "").upper()
+        if risk_level:
+            color = {
+                "LOW": "green",
+                "MEDIUM": "orange",
+                "HIGH": "red"
+            }.get(risk_level, "gray")
+            st.markdown(f"""
+                <div style='text-align: center;'>
+                    <h4>Risk Level</h4>
+                    <p style='color: {color}; font-size: 20px; font-weight: bold;'>
+                        {risk_level}
+                    </p>
+                </div>
+            """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+
+def display_educational_page():
+    """Display educational page with investment terms and definitions"""
+    st.markdown("## 📚 Investment Terms Glossary")
+    st.markdown("Understanding financial terms is crucial for making informed investment decisions. "
+                "Here's a comprehensive glossary of important investment terms used in our analysis.")
+    
+    # Create three columns for better organization
+    cols = st.columns(3)
+    terms = list(INVESTMENT_TERMS.items())
+    terms_per_col = len(terms) // 3 + (len(terms) % 3 > 0)
+    
+    for i, col in enumerate(cols):
+        with col:
+            start_idx = i * terms_per_col
+            end_idx = min((i + 1) * terms_per_col, len(terms))
+            for term, definition in terms[start_idx:end_idx]:
+                st.markdown(f"""
+                    <div style='background-color: #f8f9fa; padding: 10px; border-radius: 5px; margin-bottom: 10px;'>
+                        <strong>{term}</strong><br>
+                        <small>{definition}</small>
+                    </div>
+                """, unsafe_allow_html=True)
+
+def format_timestamp(timestamp: str) -> str:
+    """Format ISO timestamp to readable format"""
+    dt = datetime.fromisoformat(timestamp)
+    return dt.strftime("%I:%M:%S %p")
+
+def display_agent_message(agent_name: str, message: str, timestamp: str = None, status: str = "progress", result: Any = None):
+    """Display a message from an agent in a chat-like format"""
+    timestamp_str = format_timestamp(timestamp) if timestamp else datetime.now().strftime("%I:%M:%S %p")
+    
+    st.markdown(f"""
+        <div class="agent-message">
+            <div class="agent-name">
+                <span>{agent_name}</span>
+                <span class="agent-timestamp">{timestamp_str}</span>
+            </div>
+            <div class="{'agent-thinking' if status == 'progress' else ''}">
+                {message}
+                {' <span class="thinking-dots">...</span>' if status == 'progress' else ''}
+            </div>
+            {f'<div class="agent-result">{result}</div>' if result else ''}
         </div>
     """, unsafe_allow_html=True)
+
+def display_agent_chat(crew: MarketAnalysisCrew):
+    """Display the agent chat with real-time updates"""
+    chat_placeholder = st.empty()
     
-    # Sidebar for configuration only
-    with st.sidebar:
-        st.markdown("## Analysis Configuration")
-        ticker = st.text_input("Enter Stock Ticker:", value="AAPL").upper()
-        period = st.select_slider(
-            "Analysis Period:",
-            options=["1mo", "3mo", "6mo", "1y", "2y", "5y"],
-            value="1y"
-        )
-        analyze_button = st.button("🚀 Analyze Stock", use_container_width=True)
-    
-    # Main content area
-    if analyze_button:
-        with st.spinner("Analyzing stock... This may take a few minutes..."):
-            try:
-                # Display key metrics at the top
-                display_key_metrics(ticker)
-                
-                # Create main dashboard layout for charts
-                st.markdown("## Market Data Visualization")
-                chart_col1, chart_col2 = st.columns(2)
-                
-                with chart_col1:
-                    candlestick = create_candlestick_chart(ticker, period)
-                    if candlestick:
-                        st.plotly_chart(candlestick, use_container_width=True)
-                
-                with chart_col2:
-                    volume = create_volume_chart(ticker, period)
-                    if volume:
-                        st.plotly_chart(volume, use_container_width=True)
-                
-                # Perform AI analysis
-                market_crew = MarketAnalysisCrew()
-                analysis = market_crew.analyze_stock(ticker)
-                
-                if "error" in analysis and analysis["error"]:
-                    st.error(analysis["error"])
-                else:
-                    st.markdown("## AI Analysis Results")
-                    # Create tabs for different types of analysis
-                    tabs = st.tabs([
-                        "🎯 Investment Strategy",
-                        "🔍 Market Research",
-                        "📈 Technical Analysis",
-                        "📊 Fundamental Analysis",
-                        "📑 Raw Data"
-                    ])
-                    
-                    tab_sections = [
-                        "investment_strategy",
-                        "market_research",
-                        "technical_analysis",
-                        "fundamental_analysis"
-                    ]
-                    
-                    for i, section in enumerate(tab_sections):
-                        with tabs[i]:
-                            if analysis.get("json_output"):
-                                display_analysis_section(
-                                    section.replace("_", " ").title(),
-                                    analysis["json_output"].get(section, {})
-                                )
-                    
-                    with tabs[4]:
-                        st.json(analysis)
-            
-            except Exception as e:
-                st.error(f"An error occurred: {str(e)}")
-    else:
-        # Default view when no analysis is running
+    with chat_placeholder.container():
+        st.markdown('<div class="agent-chat">', unsafe_allow_html=True)
+        
+        # Initialize session state for messages if not exists
+        if 'agent_messages' not in st.session_state:
+            st.session_state.agent_messages = []
+        
+        # Get new messages
+        new_messages = crew.get_agent_messages()
+        if new_messages:
+            st.session_state.agent_messages.extend(new_messages)
+        
+        # Display all messages
+        for msg in st.session_state.agent_messages:
+            display_agent_message(
+                agent_name=msg["agent"],
+                message=msg["message"],
+                timestamp=msg["timestamp"],
+                status=msg["status"],
+                result=msg["result"] if msg["status"] == "complete" else None
+            )
+        
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        # Auto-scroll to bottom (using JavaScript)
         st.markdown("""
-            ### Welcome to your Stock Analyst AI Team! 👋
+            <script>
+                var chat = document.querySelector('.agent-chat');
+                chat.scrollTop = chat.scrollHeight;
+            </script>
+        """, unsafe_allow_html=True)
+
+def display_ai_analysis(results: dict):
+    """Display AI analysis results in a structured format"""
+    if not results:
+        return
+
+    if isinstance(results, dict) and "raw_analysis" in results:
+        st.markdown(add_tooltips_to_text(results["raw_analysis"]), unsafe_allow_html=True)
+        return
+
+    # Map analysis keys to their display names
+    analysis_mapping = {
+        "market_research": "Market Research",
+        "technical_analysis": "Technical Analysis",
+        "fundamental_analysis": "Fundamental Analysis",
+        "risk_analysis": "Risk Analysis",
+        "investment_strategy": "Investment Strategy"
+    }
+
+    for key, content in results.items():
+        if key == "risk_metrics":
+            continue
             
-            Enter a stock ticker in the sidebar and click 'Analyze Stock' to begin your analysis.
-            You'll receive:
+        display_name = analysis_mapping.get(key, key.replace('_', ' ').title())
+        st.markdown(f"<h3 class='analysis-header'>{display_name}</h3>", unsafe_allow_html=True)
+        
+        if isinstance(content, dict):
+            formatted_content = format_json_output(content)
+            formatted_content_with_tooltips = add_tooltips_to_text(formatted_content)
             
-            - 📊 Real-time market data visualization
-            - 🤖 AI-powered market analysis
-            - 📈 Technical indicators and patterns
-            - 🎯 Investment recommendations
-            - 📑 Comprehensive research reports
-        """)
+            st.markdown("<div class='json-output'>", unsafe_allow_html=True)
+            st.markdown(f"```json\n{formatted_content}\n```")
+            st.markdown("</div>", unsafe_allow_html=True)
+            
+            if key == "investment_strategy":
+                st.markdown("#### 📝 Key Points:")
+                st.markdown("- **Investment Thesis**: The core reasoning behind the investment recommendation")
+                st.markdown("- **Position Strategy**: Guidelines for position sizing and portfolio allocation")
+                st.markdown("- **Execution Plan**: Specific entry and exit points with timing considerations")
+                st.markdown("- **Risk Management**: Position limits and monitoring requirements")
+        else:
+            st.markdown(add_tooltips_to_text(str(content)), unsafe_allow_html=True)
+
+def main():
+    # Sidebar
+    with st.sidebar:
+        # Navigation at the top
+        st.markdown("### Navigation")
+        page = st.radio(
+            "Go to:",
+            ["Dashboard", "Educational Resources"]
+        )
+        
+        st.markdown("---")  # Add separator
+        
+        st.markdown("### Stock Analysis Settings")
+        ticker = st.text_input("Enter Stock Ticker:", value="AAPL").upper()
+        
+        # Add time period selection with tooltip
+        st.markdown("##### Time Period")
+        time_period = st.selectbox(
+            "Select Time Period:",
+            ["1y", "6mo", "3mo", "1mo"],
+            index=0,
+            help="Select how far back the analysis should go: 1 year (1y), 6 months (6mo), 3 months (3mo), or 1 month (1mo). This affects the historical data used in the analysis."
+        )
+        st.markdown("""
+            <div class="sidebar-tooltip">
+                📅 This determines the timeframe of historical data used in the analysis, affecting metrics like trends, moving averages, and volatility calculations.
+            </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("Analyze Stock", type="primary"):
+            with st.spinner("Initializing analysis..."):
+                try:
+                    crew = MarketAnalysisCrew()
+                    
+                    # Create progress placeholder
+                    progress_placeholder = st.empty()
+                    
+                    with progress_placeholder.container():
+                        # Initialize analysis
+                        analysis_results = crew.analyze_stock(ticker)
+                        st.session_state.analysis_results = analysis_results
+                        st.session_state.stock_data = crew.tools["stock_data"].func(ticker)
+                        st.session_state.financial_metrics = crew.tools["financial_metrics"].func(ticker)
+                        
+                        # Display real-time agent chat
+                        display_agent_chat(crew)
+                        
+                        # Update every second while analysis is running
+                        while not hasattr(st.session_state, 'analysis_results'):
+                            display_agent_chat(crew)
+                            time.sleep(1)
+                    
+                except Exception as e:
+                    st.error(f"Error analyzing stock: {str(e)}")
+                    return
+
+    if page == "Educational Resources":
+        display_educational_page()
+        return
+
+    # Main dashboard content
+    st.title("AI Stock Analysis Dashboard")
+    st.markdown("---")
+
+    if hasattr(st.session_state, 'analysis_results'):
+        # Stock Overview Section
+        st.markdown('<div class="analysis-section">', unsafe_allow_html=True)
+        cols = st.columns(4)
+        stock_data = st.session_state.stock_data
+        
+        with cols[0]:
+            st.metric("Current Price", f"${stock_data['current_price']:.2f}")
+        with cols[1]:
+            st.metric("Market Cap", f"${stock_data['market_cap']:,.0f}")
+        with cols[2]:
+            st.metric("52-Week High", f"${stock_data['52_week_high']:.2f}")
+        with cols[3]:
+            st.metric("52-Week Low", f"${stock_data['52_week_low']:.2f}")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # Charts Section
+        st.markdown('<div class="analysis-section">', unsafe_allow_html=True)
+        tab1, tab2 = st.tabs(["📈 Price Analysis", "📊 Technical Indicators"])
+        
+        with tab1:
+            st.plotly_chart(create_candlestick_chart(stock_data), use_container_width=True)
+        
+        with tab2:
+            st.plotly_chart(create_technical_indicators_chart(stock_data), use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # Financial Metrics Section
+        st.markdown('<div class="analysis-section">', unsafe_allow_html=True)
+        st.markdown("### �� Financial Analysis")
+        display_metrics_dashboard(st.session_state.financial_metrics)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # Risk Metrics Section
+        display_risk_metrics(st.session_state.analysis_results.get("risk_metrics", {}))
+
+        # AI Analysis Results Section
+        st.markdown('<div class="analysis-section">', unsafe_allow_html=True)
+        st.markdown("### 🤖 AI Analysis Insights")
+        display_ai_analysis(st.session_state.analysis_results)
+        st.markdown('</div>', unsafe_allow_html=True)
+    else:
+        st.info("👈 Enter a stock ticker in the sidebar and click 'Analyze Stock' to begin analysis.")
 
 if __name__ == "__main__":
     main() 
