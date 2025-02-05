@@ -87,7 +87,17 @@ class EnhancedAgent(Agent):
         retry=retry_if_exception_type(APIConnectionError),
         reraise=True
     )
-    def execute_task(self, task: Task, **kwargs) -> str:
+    def execute_task(self, task: Task, context: Optional[Dict[str, Any]] = None, **kwargs) -> str:
+        """Execute a task with progress tracking and retry mechanism
+        
+        Args:
+            task: The task to execute
+            context: Optional context dictionary for the task
+            **kwargs: Additional keyword arguments
+            
+        Returns:
+            str: The result of the task execution
+        """
         self._callback.on_start(task.description)
         try:
             # Simulate thinking/processing time (remove in production)
@@ -95,7 +105,8 @@ class EnhancedAgent(Agent):
             self._callback.on_progress("Analyzing data...")
             time.sleep(1)
             
-            result = super().execute_task(task, **kwargs)
+            # Call parent's execute_task with proper arguments
+            result = super().execute_task(task=task, context=context)
             self._callback.on_complete(result)
             return result
         except Exception as e:
