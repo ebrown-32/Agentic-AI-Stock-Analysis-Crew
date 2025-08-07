@@ -124,6 +124,46 @@ stock-analyst-ai/
 └── .env                  # Configuration
 ```
 
+## Quick Start
+
+### 1. Installation
+```bash
+git clone <repository>
+cd Agentic-AI-Stock-Analysis-Crew
+pip install -r requirements.txt
+```
+
+### 2. Configuration
+Copy the example environment file and add your API keys:
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with your API keys (you only need one):
+```env
+# Choose one or more providers:
+OPENAI_API_KEY=your_openai_api_key_here        # $5 free credits
+ANTHROPIC_API_KEY=your_anthropic_api_key_here  # Free tier available  
+GEMINI_API_KEY=your_gemini_api_key_here        # Free API key
+# Or use local Ollama (completely free)
+```
+
+### 3. Run the Application
+```bash
+streamlit run dashboard.py
+```
+
+## Supported AI Models
+
+The app supports multiple AI providers for different budgets and preferences:
+
+| Provider | Models | Cost | Free Option | Setup Link |
+|----------|--------|------|-------------|------------|
+| **OpenAI** | GPT-4o, GPT-4, GPT-3.5-turbo | $0.01-$0.06/1K tokens | $5 free credits | [Get API Key](https://platform.openai.com/signup) |
+| **Anthropic** | Claude 3.5 Sonnet, Claude 3 Haiku | $0.25-$3.00/1K tokens | Free tier | [Get API Key](https://console.anthropic.com/) |
+| **Google** | Gemini 1.5 Pro, Gemini 1.5 Flash | $0.075-$7.00/1K tokens | Free API key | [Get API Key](https://makersuite.google.com/app/apikey) |
+| **Ollama** | Llama 3.2, Mistral, CodeLlama | Free | Always free | [Download Ollama](https://ollama.ai/) |
+
 ## Dependencies
 
 - crewai (https://docs.crewai.com/introduction)

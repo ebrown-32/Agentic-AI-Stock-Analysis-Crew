@@ -219,7 +219,6 @@ def calculate_receivables_turnover(income_stmt: pd.DataFrame, balance_sheet: pd.
     except:
         return None
 
-# Create tool instances with enhanced error handling
 stock_data_tool_instance = Tool(
     name="stock_data_tool",
     func=stock_data_tool,
