@@ -982,3 +982,155 @@ LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
 2025-02-04 23:48:56,256 - financial_tools - INFO - Successfully fetched stock data for META
 2025-02-04 23:48:56,257 - financial_tools - INFO - Calculating financial metrics for ticker: META
 2025-02-04 23:48:56,342 - financial_tools - INFO - Successfully calculated financial metrics for META
+2025-08-07 03:48:20,074 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 03:49:05,736 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 03:49:30,718 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-08-07 03:49:30,720 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-08-07 03:49:30,720 - market_analysis_crew - INFO - Creating specialized agents
+2025-08-07 03:49:30,721 - market_analysis_crew - ERROR - Error during stock analysis: 2 validation errors for EnhancedAgent
+tools.0
+  Input should be a valid dictionary or instance of BaseTool [type=model_type, input_value=Tool(name='Search', descr...pper at 0x7f6baf00e340>), input_type=Tool]
+    For further information visit https://errors.pydantic.dev/2.11/v/model_type
+tools.1
+  Input should be a valid dictionary or instance of BaseTool [type=model_type, input_value=Tool(name='StockData', de...pper at 0x7f6b58e10d60>), input_type=Tool]
+    For further information visit https://errors.pydantic.dev/2.11/v/model_type
+2025-08-07 03:52:55,462 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 03:52:55,463 - market_analysis_crew - INFO - LLM initialized successfully
+2025-08-07 03:53:09,138 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 03:53:09,139 - market_analysis_crew - INFO - LLM initialized successfully
+2025-08-07 03:53:09,144 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-08-07 03:53:20,544 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 03:53:20,545 - market_analysis_crew - ERROR - Configuration error: Missing API key. Please set GOOGLE_API_KEY or GEMINI_API_KEY environment variable.
+2025-08-07 03:53:20,550 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-08-07 03:54:30,464 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 03:54:30,465 - market_analysis_crew - INFO - LLM initialized successfully
+2025-08-07 03:54:32,728 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-08-07 03:54:32,730 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-08-07 03:54:32,731 - market_analysis_crew - INFO - Creating specialized agents
+2025-08-07 03:54:32,736 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-08-07 03:54:35,781 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-08-07 03:54:35,993 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=your_gemini_api_key_here "HTTP/1.1 400 Bad Request"
+2025-08-07 03:54:36,019 - market_analysis_crew - ERROR - Error during stock analysis: litellm.AuthenticationError: geminiException - {
+  "error": {
+    "code": 400,
+    "message": "API key not valid. Please pass a valid API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key not valid. Please pass a valid API key."
+      }
+    ]
+  }
+}
+
+2025-08-07 03:57:32,495 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 03:57:32,496 - market_analysis_crew - INFO - LLM initialized successfully
+2025-08-07 03:57:53,774 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-08-07 03:57:53,776 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-08-07 03:57:53,777 - market_analysis_crew - INFO - Creating specialized agents
+2025-08-07 03:57:53,786 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-08-07 03:57:56,841 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-pro-latest; provider = gemini
+2025-08-07 03:57:57,034 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=AIzaSyAuomvVGgX-Av5kDvfdZamqLRqrvzfnTiI "HTTP/1.1 429 Too Many Requests"
+2025-08-07 03:57:57,060 - market_analysis_crew - ERROR - Error during stock analysis: litellm.RateLimitError: litellm.RateLimitError: VertexAIException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-pro"
+            }
+          },
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerMinutePerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-pro"
+            }
+          },
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count",
+            "quotaId": "GenerateContentInputTokensPerModelPerMinute-FreeTier",
+            "quotaDimensions": {
+              "model": "gemini-1.5-pro",
+              "location": "global"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "2s"
+      }
+    ]
+  }
+}
+
+2025-08-07 04:11:00,611 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 04:11:00,611 - market_analysis_crew - INFO - Initializing GEMINI LLM with model: gemini-1.5-pro-latest
+2025-08-07 04:11:00,612 - market_analysis_crew - INFO - LLM initialized successfully
+2025-08-07 04:11:13,017 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 04:11:13,018 - market_analysis_crew - INFO - Initializing GEMINI LLM with model: gemini-1.5-pro-latest
+2025-08-07 04:11:13,018 - market_analysis_crew - INFO - LLM initialized successfully
+2025-08-07 04:11:13,024 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-08-07 04:11:13,024 - market_analysis_crew - INFO - Initializing GEMINI LLM with model: gemini-1.5-flash
+2025-08-07 04:11:23,209 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 04:11:23,222 - market_analysis_crew - ERROR - Configuration error: Missing GEMINI API key. Please set GEMINI_API_KEY environment variable. Please set at least one API key in your .env file.
+2025-08-07 04:11:23,228 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-08-07 04:12:31,652 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 04:12:31,653 - market_analysis_crew - INFO - Initializing GEMINI LLM with model: gemini-1.5-pro-latest
+2025-08-07 04:12:31,653 - market_analysis_crew - INFO - LLM initialized successfully
+2025-08-07 04:13:52,904 - market_analysis_crew - INFO - Initializing LLM...
+2025-08-07 04:13:52,905 - market_analysis_crew - INFO - Initializing GEMINI LLM with model: gemini-1.5-pro-latest
+2025-08-07 04:13:52,906 - market_analysis_crew - INFO - LLM initialized successfully
+2025-08-07 04:14:10,565 - market_analysis_crew - INFO - Initializing Market Analysis Crew
+2025-08-07 04:14:10,565 - market_analysis_crew - INFO - Initializing GEMINI LLM with model: gemini-1.5-flash
+2025-08-07 04:14:10,568 - market_analysis_crew - INFO - Starting comprehensive analysis for ticker: AAPL
+2025-08-07 04:14:10,568 - market_analysis_crew - INFO - Creating specialized agents
+2025-08-07 04:14:10,576 - market_analysis_crew - INFO - Creating analysis tasks for ticker: AAPL
+2025-08-07 04:14:13,626 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-flash; provider = gemini
+2025-08-07 04:14:14,554 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyAuomvVGgX-Av5kDvfdZamqLRqrvzfnTiI "HTTP/1.1 200 OK"
+2025-08-07 04:14:14,568 - LiteLLM - INFO - Wrapper: Completed Call, calling success_handler
+2025-08-07 04:14:14,579 - financial_tools - INFO - Fetching stock data for ticker: AAPL
+2025-08-07 04:14:16,692 - financial_tools - INFO - Successfully fetched stock data for AAPL
+2025-08-07 04:14:16,705 - LiteLLM - INFO - 
+LiteLLM completion() model= gemini-1.5-flash; provider = gemini
+2025-08-07 04:14:38,721 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyAuomvVGgX-Av5kDvfdZamqLRqrvzfnTiI "HTTP/1.1 503 Service Unavailable"
+2025-08-07 04:14:38,745 - market_analysis_crew - ERROR - Error during stock analysis: litellm.InternalServerError: litellm.InternalServerError: VertexAIException - {
+  "error": {
+    "code": 503,
+    "message": "The model is overloaded. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+

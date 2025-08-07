@@ -1,8 +1,15 @@
-from crewai import Agent, Task, Crew, Process, LLM
-from langchain_community.tools import DuckDuckGoSearchRun
-from langchain.tools import Tool
-from financial_tools import stock_data_tool, financial_metrics_tool
+# Fix for ChromaDB SQLite version issue
+import sys
 import os
+__import__('pysqlite3')
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+from crewai import Agent, Task, Crew, Process, LLM
+from crewai.tools import BaseTool
+from langchain_community.tools import DuckDuckGoSearchRun
+from financial_tools import stock_data_tool, financial_metrics_tool
+from pydantic import Field
+from typing import Type
 from dotenv import load_dotenv
 from typing import Any, Dict, List, Optional
 import logging
@@ -16,7 +23,6 @@ import time
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 from litellm import APIConnectionError
 
-# Load environment variables
 load_dotenv()
 
 # Configure logging
@@ -30,23 +36,168 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Add retry decorator for LLM initialization
+# Custom CrewAI Tools
+class SearchTool(BaseTool):
+    name: str = "Search"
+    description: str = "Search the internet for recent information. Input should be a simple search query string."
+    
+    def _run(self, query: str) -> str:
+        try:
+            search = DuckDuckGoSearchRun()
+            return search.run(query)
+        except Exception as e:
+            logger.error(f"Search failed: {str(e)}")
+            return f"Search failed: {str(e)}"
+
+class StockDataTool(BaseTool):
+    name: str = "StockData"
+    description: str = "Get comprehensive stock data including technical indicators. Input should be a stock ticker symbol."
+    
+    def _run(self, ticker: str) -> str:
+        try:
+            result = stock_data_tool({"ticker": ticker})
+            return json.dumps(result)
+        except Exception as e:
+            logger.error(f"Failed to fetch stock data: {str(e)}")
+            return json.dumps({"error": f"Failed to fetch stock data: {str(e)}"})
+
+class FinancialMetricsTool(BaseTool):
+    name: str = "FinancialMetrics"
+    description: str = "Get detailed financial metrics and analysis. Input should be a stock ticker symbol."
+    
+    def _run(self, ticker: str) -> str:
+        try:
+            result = financial_metrics_tool({"ticker": ticker})
+            return json.dumps(result)
+        except Exception as e:
+            logger.error(f"Failed to fetch financial metrics: {str(e)}")
+            return json.dumps({"error": f"Failed to fetch financial metrics: {str(e)}"})
+
+# LLM Provider configurations
+LLM_PROVIDERS = {
+    "openai": {
+        "models": ["gpt-4o", "gpt-4o-mini", "gpt-4", "gpt-3.5-turbo"],
+        "api_key_env": "OPENAI_API_KEY",
+        "default_model": "gpt-4o-mini"
+    },
+    "anthropic": {
+        "models": ["claude-3-5-sonnet-20241022", "claude-3-haiku-20240307"],
+        "api_key_env": "ANTHROPIC_API_KEY",
+        "default_model": "claude-3-haiku-20240307"
+    },
+    "gemini": {
+        "models": ["gemini-1.5-pro-latest", "gemini-1.5-flash"],
+        "api_key_env": "GEMINI_API_KEY",
+        "default_model": "gemini-1.5-flash"
+    },
+    "ollama": {
+        "models": ["llama3.2", "mistral", "codellama", "llama2"],
+        "api_key_env": None,  # Ollama doesn't need API key
+        "default_model": "llama3.2"
+    }
+}
+
+def get_available_providers():
+    """Get list of available providers based on API keys"""
+    available = []
+    for provider, config in LLM_PROVIDERS.items():
+        if provider == "ollama":
+            # Check if Ollama server is running
+            try:
+                import requests
+                ollama_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
+                response = requests.get(f"{ollama_url}/api/tags", timeout=2)
+                if response.status_code == 200:
+                    available.append(provider)
+            except:
+                pass
+        else:
+            api_key = os.getenv(config["api_key_env"])
+            if api_key and api_key != f"your_{provider}_api_key_here":
+                available.append(provider)
+    return available
+
+def parse_model_provider(model_provider_str):
+    """Parse model provider string like 'openai/gpt-4' into provider and model"""
+    if '/' in model_provider_str:
+        provider, model = model_provider_str.split('/', 1)
+        return provider, model
+    else:
+        # Default to provider name only, use default model
+        provider = model_provider_str.lower()
+        if provider in LLM_PROVIDERS:
+            return provider, LLM_PROVIDERS[provider]["default_model"]
+        return "openai", "gpt-4o-mini"
+
+# retry decorator for LLM initialization
 @retry(
     stop=stop_after_attempt(3),
     wait=wait_exponential(multiplier=1, min=4, max=10),
     retry=retry_if_exception_type(APIConnectionError),
     reraise=True
 )
-def initialize_llm():
-    """Initialize LLM with retry mechanism"""
+def initialize_llm(model_provider=None):
+    """Initialize LLM with retry mechanism and multi-provider support"""
+    if model_provider is None:
+        model_provider = os.getenv('MODEL_PROVIDER', 'openai/gpt-4o-mini')
+    
+    provider, model = parse_model_provider(model_provider)
+    
+    # Validate provider
+    if provider not in LLM_PROVIDERS:
+        raise ValueError(f"Unsupported provider: {provider}. Available: {list(LLM_PROVIDERS.keys())}")
+    
+    provider_config = LLM_PROVIDERS[provider]
+    
+    # Check API key (except for Ollama)
+    if provider != "ollama":
+        api_key = os.getenv(provider_config["api_key_env"])
+        if not api_key or api_key == f"your_{provider}_api_key_here":
+            available_providers = get_available_providers()
+            if available_providers:
+                suggestion = f" Available providers with API keys: {', '.join(available_providers)}"
+            else:
+                suggestion = " Please set at least one API key in your .env file."
+            raise ValueError(f"Missing {provider.upper()} API key. Please set {provider_config['api_key_env']} environment variable.{suggestion}")
+    else:
+        # For Ollama, check if server is accessible
+        try:
+            import requests
+            ollama_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434')
+            response = requests.get(f"{ollama_url}/api/tags", timeout=5)
+            if response.status_code != 200:
+                raise Exception("Ollama server not responding")
+        except Exception as e:
+            raise ValueError(f"Ollama server not accessible at {ollama_url}. Please start Ollama server first. Error: {str(e)}")
+    
+    # Construct model string for CrewAI
+    if provider == "ollama":
+        model_string = f"ollama/{model}"
+        # Set Ollama base URL if provided
+        ollama_base_url = os.getenv('OLLAMA_BASE_URL')
+        if ollama_base_url:
+            os.environ['OLLAMA_HOST'] = ollama_base_url
+    else:
+        model_string = f"{provider}/{model}"
+    
+    logger.info(f"Initializing {provider.upper()} LLM with model: {model}")
+    
     return LLM(
-        model="gemini/gemini-1.5-pro-latest",
+        model=model_string,
         temperature=0.7
     )
 
-# Update the LLM initialization
+# Update the LLM initialization with error handling
 logger.info("Initializing LLM...")
-llm = initialize_llm()
+try:
+    llm = initialize_llm()
+    logger.info("LLM initialized successfully")
+except ValueError as e:
+    logger.error(f"Configuration error: {str(e)}")
+    llm = None
+except Exception as e:
+    logger.error(f"Failed to initialize LLM: {str(e)}")
+    llm = None
 
 # Global message queue for agent updates
 agent_messages = queue.Queue()
@@ -77,7 +228,7 @@ class AgentCallback:
 
 class EnhancedAgent(Agent):
     """Enhanced Agent class with progress tracking and retry mechanism"""
-    def __init__(self, role: str, goal: str, backstory: str, tools: List[Tool], llm: Any, verbose: bool = True):
+    def __init__(self, role: str, goal: str, backstory: str, tools: List[BaseTool], llm: Any, verbose: bool = True):
         super().__init__(role=role, goal=goal, backstory=backstory, tools=tools, llm=llm, verbose=verbose)
         self._callback = AgentCallback(role)
 
@@ -100,7 +251,7 @@ class EnhancedAgent(Agent):
         """
         self._callback.on_start(task.description)
         try:
-            # Simulate thinking/processing time (remove in production)
+            # Simulate thinking/processing time
             time.sleep(2)
             self._callback.on_progress("Analyzing data...")
             time.sleep(1)
@@ -149,52 +300,35 @@ class RiskManager:
         }
 
 class MarketAnalysisCrew:
-    def __init__(self):
+    def __init__(self, model_provider=None):
         logger.info("Initializing Market Analysis Crew")
+        # Initialize LLM for this instance
+        if model_provider:
+            self.llm = initialize_llm(model_provider)
+        elif llm is None:
+            # Try to find any available provider
+            available_providers = get_available_providers()
+            if available_providers:
+                default_provider = available_providers[0]
+                provider_config = LLM_PROVIDERS[default_provider]
+                model_string = f"{default_provider}/{provider_config['default_model']}"
+                logger.info(f"Using available provider: {model_string}")
+                self.llm = initialize_llm(model_string)
+            else:
+                raise ValueError("No LLM providers available. Please configure at least one API key or start Ollama server.")
+        else:
+            self.llm = llm
+            
         self._init_tools()
         self.risk_manager = RiskManager()
         self.messages = []
 
     def _init_tools(self):
-        # Initialize tools with proper error handling
-        def search_wrapper(query: str) -> str:
-            try:
-                search = DuckDuckGoSearchRun()
-                return search.run(query)
-            except Exception as e:
-                logger.error(f"Search failed: {str(e)}")
-                return f"Search failed: {str(e)}"
-        
-        def stock_data_wrapper(ticker: str) -> Dict[str, Any]:
-            try:
-                return stock_data_tool({"ticker": ticker})
-            except Exception as e:
-                logger.error(f"Failed to fetch stock data: {str(e)}")
-                return {"error": f"Failed to fetch stock data: {str(e)}"}
-            
-        def financial_metrics_wrapper(ticker: str) -> Dict[str, Any]:
-            try:
-                return financial_metrics_tool({"ticker": ticker})
-            except Exception as e:
-                logger.error(f"Failed to fetch financial metrics: {str(e)}")
-                return {"error": f"Failed to fetch financial metrics: {str(e)}"}
-
+        # Initialize CrewAI tools
         self.tools = {
-            "search": Tool(
-                name="Search",
-                func=search_wrapper,
-                description="Search the internet for recent information. Input should be a simple search query string."
-            ),
-            "stock_data": Tool(
-                name="StockData",
-                func=stock_data_wrapper,
-                description="Get comprehensive stock data including technical indicators. Input should be a stock ticker symbol."
-            ),
-            "financial_metrics": Tool(
-                name="FinancialMetrics",
-                func=financial_metrics_wrapper,
-                description="Get detailed financial metrics and analysis. Input should be a stock ticker symbol."
-            )
+            "search": SearchTool(),
+            "stock_data": StockDataTool(),
+            "financial_metrics": FinancialMetricsTool()
         }
 
     def create_agents(self) -> List[EnhancedAgent]:
@@ -207,7 +341,7 @@ class MarketAnalysisCrew:
             Specializes in identifying market opportunities, competitive advantages, and potential risks.
             Known for combining quantitative and qualitative analysis to form comprehensive market views.""",
             tools=[self.tools["search"], self.tools["stock_data"]],
-            llm=llm,
+            llm=self.llm,
             verbose=True
         )
 
@@ -218,7 +352,7 @@ class MarketAnalysisCrew:
             Masters multiple timeframe analysis and combines various technical indicators for high-probability setups.
             Specializes in risk management and position sizing based on technical levels.""",
             tools=[self.tools["stock_data"]],
-            llm=llm,
+            llm=self.llm,
             verbose=True
         )
 
@@ -229,7 +363,7 @@ class MarketAnalysisCrew:
             Expert in financial statement analysis, industry comparison, and intrinsic value calculation.
             Specializes in identifying companies with strong competitive advantages and growth potential.""",
             tools=[self.tools["stock_data"], self.tools["financial_metrics"]],
-            llm=llm,
+            llm=self.llm,
             verbose=True
         )
 
@@ -240,7 +374,7 @@ class MarketAnalysisCrew:
             Specializes in portfolio risk assessment, volatility analysis, and risk-adjusted returns.
             Expert in using various risk metrics and stress testing scenarios.""",
             tools=[self.tools["stock_data"], self.tools["financial_metrics"]],
-            llm=llm,
+            llm=self.llm,
             verbose=True
         )
 
@@ -251,7 +385,7 @@ class MarketAnalysisCrew:
             Expert in developing comprehensive investment strategies that balance risk and reward.
             Specializes in portfolio optimization and risk-adjusted position sizing.""",
             tools=[self.tools["stock_data"]],
-            llm=llm,
+            llm=self.llm,
             verbose=True
         )
 
@@ -500,15 +634,24 @@ class MarketAnalysisCrew:
         """
         logger.info(f"Starting comprehensive analysis for ticker: {ticker}")
         try:
-            # Clear previous messages
+            # Check if LLM is properly initialized
+            if self.llm is None:
+                error_msg = "Cannot perform analysis: LLM not initialized. Please check your API key configuration."
+                logger.error(error_msg)
+                return {
+                    "error": error_msg,
+                    "ticker": ticker,
+                    "timestamp": datetime.now().isoformat(),
+                    "status": "failed",
+                    "reason": "missing_api_key"
+                }
+
             while not agent_messages.empty():
                 agent_messages.get()
 
-            # Create agents and tasks
             agents = self.create_agents()
             tasks = self.create_tasks(ticker, agents)
             
-            # Create crew with sequential process
             crew = Crew(
                 agents=agents,
                 tasks=tasks,
@@ -516,25 +659,42 @@ class MarketAnalysisCrew:
                 verbose=True
             )
             
-            # Execute analysis
             result = crew.kickoff()
             
             # Parse and structure results
             analysis_results = self._parse_results(result)
             
-            # Add risk metrics
-            stock_data = self.tools["stock_data"].func(ticker)
-            risk_metrics = self.risk_manager.assess_market_risk(stock_data)
-            analysis_results["risk_metrics"] = risk_metrics
+            # Add risk metrics using the tool's _run method
+            stock_data_str = self.tools["stock_data"]._run(ticker)
+            stock_data = json.loads(stock_data_str)
+            if "error" not in stock_data:
+                risk_metrics = self.risk_manager.assess_market_risk(stock_data)
+                analysis_results["risk_metrics"] = risk_metrics
             
-            # Log success
             logger.info(f"Successfully completed analysis for {ticker}")
             
             return analysis_results
             
+        except ValueError as e:
+            error_msg = f"Configuration error: {str(e)}"
+            logger.error(error_msg)
+            return {
+                "error": error_msg,
+                "ticker": ticker,
+                "timestamp": datetime.now().isoformat(),
+                "status": "failed",
+                "reason": "configuration_error"
+            }
         except Exception as e:
-            logger.error(f"Error during stock analysis: {str(e)}")
-            raise
+            error_msg = f"Error during stock analysis: {str(e)}"
+            logger.error(error_msg)
+            return {
+                "error": error_msg,
+                "ticker": ticker,
+                "timestamp": datetime.now().isoformat(),
+                "status": "failed",
+                "reason": "analysis_error"
+            }
 
     def _parse_results(self, result: str) -> Dict[str, Any]:
         """Parse and structure the analysis results"""

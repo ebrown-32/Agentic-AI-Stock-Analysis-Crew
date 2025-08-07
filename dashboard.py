@@ -6,15 +6,15 @@ import streamlit as st
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pandas as pd
-from market_analysis_crew import MarketAnalysisCrew
+from market_analysis_crew import MarketAnalysisCrew, LLM_PROVIDERS, get_available_providers
 from datetime import datetime
 import numpy as np
 import plotly.express as px
 import json
 import time
 from typing import Any
+import os
 
-# Set page config for a modern look
 st.set_page_config(
     page_title="AI Stock Analysis Dashboard",
     page_icon="📈",
@@ -22,7 +22,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Investment terms dictionary
 INVESTMENT_TERMS = {
     "RSI": "Relative Strength Index - A momentum indicator that measures the magnitude of recent price changes to evaluate overbought or oversold conditions.",
     "MACD": "Moving Average Convergence Divergence - A trend-following momentum indicator that shows the relationship between two moving averages of a security's price.",
@@ -38,7 +37,6 @@ INVESTMENT_TERMS = {
     "ESG": "Environmental, Social, and Governance - A set of standards for a company's operations that socially conscious investors use to screen potential investments."
 }
 
-# Custom CSS for modern styling
 st.markdown("""
     <style>
         /* Main container styling */
@@ -410,7 +408,6 @@ def display_educational_page():
     st.markdown("Understanding financial terms is crucial for making informed investment decisions. "
                 "Here's a comprehensive glossary of important investment terms used in our analysis.")
     
-    # Create three columns for better organization
     cols = st.columns(3)
     terms = list(INVESTMENT_TERMS.items())
     terms_per_col = len(terms) // 3 + (len(terms) % 3 > 0)
@@ -538,12 +535,62 @@ def main():
             ["Dashboard", "Educational Resources"]
         )
         
-        st.markdown("---")  # Add separator
+        st.markdown("---")
         
         st.markdown("### Stock Analysis Settings")
         ticker = st.text_input("Enter Stock Ticker:", value="AAPL").upper()
         
-        # Add time period selection with tooltip
+        # LLM Provider Selection
+        st.markdown("##### AI Model Configuration")
+        available_providers = get_available_providers()
+        
+        if not available_providers:
+            st.warning("⚠️ No LLM providers configured!")
+            st.markdown("""
+                <div style='background-color: #fff3cd; padding: 10px; border-radius: 5px; margin: 10px 0;'>
+                    <strong>Quick Setup:</strong><br>
+                    1. Copy <code>.env.example</code> to <code>.env</code><br>
+                    2. Add your API key to <code>.env</code><br>
+                    3. Restart the application<br><br>
+                    <strong>Free Options:</strong><br>
+                    • <a href="https://platform.openai.com/signup">OpenAI</a> - $5 free credits<br>
+                    • <a href="https://console.anthropic.com/">Anthropic</a> - Free tier available<br>
+                    • <a href="https://makersuite.google.com/app/apikey">Google AI</a> - Free API key<br>
+                    • <a href="https://ollama.ai/">Ollama</a> - Free local models
+                </div>
+            """, unsafe_allow_html=True)
+        
+        # Provider selection
+        provider_options = []
+        model_options = {}
+        
+        for provider in available_providers:
+            provider_config = LLM_PROVIDERS[provider]
+            for model in provider_config["models"]:
+                display_name = f"{provider.upper()} - {model}"
+                provider_key = f"{provider}/{model}"
+                provider_options.append(display_name)
+                model_options[display_name] = provider_key
+        
+        if provider_options:
+            selected_display = st.selectbox(
+                "Select AI Model:",
+                provider_options,
+                index=0,
+                help="Choose the AI model for analysis. Different models have different strengths and costs."
+            )
+            selected_model = model_options[selected_display]
+            
+            # Show model info
+            provider_name = selected_model.split('/')[0]
+            st.markdown(f"""
+                <div class="sidebar-tooltip">
+                    🤖 Using {provider_name.upper()} model. Each provider offers different analysis styles and capabilities.
+                </div>
+            """, unsafe_allow_html=True)
+        else:
+            selected_model = None
+            
         st.markdown("##### Time Period")
         time_period = st.selectbox(
             "Select Time Period:",
@@ -558,19 +605,37 @@ def main():
         """, unsafe_allow_html=True)
         
         if st.button("Analyze Stock", type="primary"):
+            if not available_providers:
+                st.error("❌ **No LLM providers available**\n\nPlease configure at least one API key in your .env file.")
+                st.stop()
+                
             with st.spinner("Initializing analysis..."):
                 try:
-                    crew = MarketAnalysisCrew()
+                    crew = MarketAnalysisCrew(model_provider=selected_model)
                     
-                    # Create progress placeholder
+                    # progress placeholder
                     progress_placeholder = st.empty()
                     
                     with progress_placeholder.container():
                         # Initialize analysis
                         analysis_results = crew.analyze_stock(ticker)
+                        
+                        # Check if analysis returned an error
+                        if isinstance(analysis_results, dict) and "error" in analysis_results:
+                            reason = analysis_results.get("reason", "unknown")
+                            if reason == "missing_api_key":
+                                st.error("🔑 **API Key Missing**\n\nPlease set your API key as an environment variable:")
+                                st.code("export GOOGLE_API_KEY=your_api_key_here")
+                                st.info("💡 **Tip**: You can get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)")
+                            elif reason == "configuration_error":
+                                st.error("⚙️ **Configuration Error**\n\n" + analysis_results["error"])
+                            else:
+                                st.error("❌ **Analysis Failed**\n\n" + analysis_results["error"])
+                            return
+                        
                         st.session_state.analysis_results = analysis_results
-                        st.session_state.stock_data = crew.tools["stock_data"].func(ticker)
-                        st.session_state.financial_metrics = crew.tools["financial_metrics"].func(ticker)
+                        st.session_state.stock_data = crew.tools["stock_data"]._run(ticker)
+                        st.session_state.financial_metrics = crew.tools["financial_metrics"]._run(ticker)
                         
                         # Display real-time agent chat
                         display_agent_chat(crew)
@@ -580,8 +645,17 @@ def main():
                             display_agent_chat(crew)
                             time.sleep(1)
                     
+                except ValueError as e:
+                    if "API key" in str(e).lower():
+                        st.error("🔑 **API Key Missing**\n\nPlease set your API key as an environment variable:")
+                        st.code("export GOOGLE_API_KEY=your_api_key_here")
+                        st.info("💡 **Tip**: You can get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)")
+                    else:
+                        st.error(f"⚙️ **Configuration Error**: {str(e)}")
+                    return
                 except Exception as e:
-                    st.error(f"Error analyzing stock: {str(e)}")
+                    st.error(f"❌ **Unexpected Error**: {str(e)}")
+                    st.info("Please check your configuration and try again.")
                     return
 
     if page == "Educational Resources":
