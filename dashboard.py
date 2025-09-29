@@ -634,8 +634,34 @@ def main():
                             return
                         
                         st.session_state.analysis_results = analysis_results
-                        st.session_state.stock_data = crew.tools["stock_data"]._run(ticker)
-                        st.session_state.financial_metrics = crew.tools["financial_metrics"]._run(ticker)
+
+                        stock_data_raw = crew.tools["stock_data"]._run(ticker)
+                        if isinstance(stock_data_raw, str):
+                            try:
+                                stock_data = json.loads(stock_data_raw)
+                            except json.JSONDecodeError:
+                                st.error("Failed to parse stock data response.")
+                                return
+                        else:
+                            stock_data = stock_data_raw
+                        if isinstance(stock_data, dict) and stock_data.get("error"):
+                            st.error(stock_data["error"])
+                            return
+                        st.session_state.stock_data = stock_data
+
+                        financial_metrics_raw = crew.tools["financial_metrics"]._run(ticker)
+                        if isinstance(financial_metrics_raw, str):
+                            try:
+                                financial_metrics = json.loads(financial_metrics_raw)
+                            except json.JSONDecodeError:
+                                st.error("Failed to parse financial metrics response.")
+                                return
+                        else:
+                            financial_metrics = financial_metrics_raw
+                        if isinstance(financial_metrics, dict) and financial_metrics.get("error"):
+                            st.error(financial_metrics["error"])
+                            return
+                        st.session_state.financial_metrics = financial_metrics
                         
                         # Display real-time agent chat
                         display_agent_chat(crew)
